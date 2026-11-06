@@ -39,15 +39,12 @@ FIN
 
 Actividad 2: Procedimientos almacenados de mantenimiento 
 
-
 USE NovaMarket;
 GO
 
--- ============================================================================
--- 1. PROCEDIMIENTO ALMACENADO: Insertar Nuevo Producto
--- Parámetros de Entrada: @Nombre, @Precio, @Stock
--- Parámetro de Salida:   @NuevoId (retorna el ID del producto insertado)
--- ============================================================================
+/* ============================================================================
+   1. PROCEDIMIENTO ALMACENADO: Insertar Nuevo Producto
+   ============================================================================ */
 CREATE OR ALTER PROCEDURE sp_InsertarProducto
     @Nombre NVARCHAR(100),
     @Precio DECIMAL(10,2),
@@ -57,7 +54,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    -- Validaciones básicas de negocio en el servidor
     IF @Precio <= 0
     BEGIN
         RAISERROR('El precio del producto debe ser mayor a cero.', 16, 1);
@@ -70,23 +66,16 @@ BEGIN
         RETURN;
     END
 
-    -- Inserción del registro en la tabla Producto
     INSERT INTO Producto (Nombre, Precio, Stock)
     VALUES (@Nombre, @Precio, @Stock);
 
-    -- Captura del ID autogenerado
     SET @NuevoId = SCOPE_IDENTITY();
 END;
 GO
 
--- ============================================================================
--- 2. PROCEDIMIENTO ALMACENADO: Actualizar Stock de Producto
--- Parámetros de Entrada: @IdProducto, @NuevoStock
--- Valor de Retorno (RETURN): 
---    0  -> Éxito
---   -1  -> El producto no existe
---   -2  -> Stock inválido (menor a cero)
--- ============================================================================
+/* ============================================================================
+   2. PROCEDIMIENTO ALMACENADO: Actualizar Stock de Producto
+   ============================================================================ */
 CREATE OR ALTER PROCEDURE sp_ActualizarStockProducto
     @IdProducto INT,
     @NuevoStock INT
@@ -94,32 +83,27 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Validación 1: Existencia del producto
     IF NOT EXISTS (SELECT 1 FROM Producto WHERE IdProducto = @IdProducto)
     BEGIN
-        RETURN -1; -- Error: Producto no existe
+        RETURN -1;
     END
 
-    -- Validación 2: Stock no negativo
     IF @NuevoStock < 0
     BEGIN
-        RETURN -2; -- Error: Stock inválido
+        RETURN -2;
     END
 
-    -- Actualización de la tabla Producto
     UPDATE Producto
     SET Stock = @NuevoStock
     WHERE IdProducto = @IdProducto;
 
-    RETURN 0; -- Operación exitosa
+    RETURN 0;
 END;
 GO
 
--- ============================================================================
--- 3. CASOS DE PRUEBA Y EVIDENCIAS DE EJECUCIÓN
--- ============================================================================
-
--- CASO A: Inserción de un nuevo producto usando parámetro OUTPUT
+/* ============================================================================
+   3. CASOS DE PRUEBA Y EVIDENCIAS DE EJECUCIÓN
+   ============================================================================ */
 DECLARE @IdGenerado INT;
 
 EXEC sp_InsertarProducto 
@@ -131,13 +115,11 @@ EXEC sp_InsertarProducto
 SELECT @IdGenerado AS [ID_Producto_Creado];
 GO
 
--- CASO B: Actualización de stock usando Código de Retorno
 DECLARE @ResultadoActualizacion INT;
 
 EXEC @ResultadoActualizacion = sp_ActualizarStockProducto 
     @IdProducto = 1, 
     @NuevoStock = 18;
 
-SELECT @ResultadoActualizacion AS [Codigo_Resultado_Retorno]; 
--- Retorna 0 (Éxito)
+SELECT @ResultadoActualizacion AS [Codigo_Resultado_Retorno];
 GO
