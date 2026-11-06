@@ -35,3 +35,67 @@ FIN
 * `-1`: Error. El equipo especificado en `@IdEquipo` no existe.
 * `-2`: Error. No se puede dar de baja un equipo con órdenes de trabajo abiertas.
 
+---
+
+## Actividad 2: Procedimientos Almacenados de Mantenimiento
+
+**Contexto y Problema:** Operaciones de mantenimiento reutilizables sobre las tablas existentes (`Producto`), permitiendo altas y actualizaciones controladas desde el servidor.
+
+### 1. Script T-SQL: Procedimientos Almacenados
+
+```sql
+USE NovaMarket;
+GO
+
+CREATE OR ALTER PROCEDURE sp_InsertarProducto
+    @Nombre NVARCHAR(100),
+    @Precio DECIMAL(10,2),
+    @Stock INT,
+    @NuevoId INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    IF @Precio <= 0
+    BEGIN
+        RAISERROR('El precio del producto debe ser mayor a cero.', 16, 1);
+        RETURN;
+    END;
+
+    IF @Stock < 0
+    BEGIN
+        RAISERROR('El stock inicial no puede ser negativo.', 16, 1);
+        RETURN;
+    END;
+
+    INSERT INTO Producto (Nombre, Precio, Stock)
+    VALUES (@Nombre, @Precio, @Stock);
+
+    SET @NuevoId = SCOPE_IDENTITY();
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_ActualizarStockProducto
+    @IdProducto INT,
+    @NuevoStock INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM Producto WHERE IdProducto = @IdProducto)
+    BEGIN
+        RETURN -1;
+    END;
+
+    IF @NuevoStock < 0
+    BEGIN
+        RETURN -2;
+    END;
+
+    UPDATE Producto
+    SET Stock = @NuevoStock
+    WHERE IdProducto = @IdProducto;
+
+    RETURN 0;
+END;
+GO
