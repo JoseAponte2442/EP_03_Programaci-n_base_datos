@@ -99,3 +99,29 @@ BEGIN
     RETURN 0;
 END;
 GO
+```
+
+### 2. Casos de Prueba y Evidencias de Ejecución
+
+
+```sql
+DECLARE @IdGenerado INT;
+
+EXEC sp_InsertarProducto 
+    @Nombre = 'Laptop Pro 15', 
+    @Precio = 1250.00, 
+    @Stock = 20, 
+    @NuevoId = @IdGenerado OUTPUT;
+
+SELECT @IdGenerado AS [ID_Producto_Creado];
+GO
+
+DECLARE @ResultadoActualizacion INT;
+
+EXEC @ResultadoActualizacion = sp_ActualizarStockProducto 
+    @IdProducto = 1, 
+    @NuevoStock = 18;
+
+SELECT @ResultadoActualizacion AS [Codigo_Resultado_Retorno];
+GO
+```
