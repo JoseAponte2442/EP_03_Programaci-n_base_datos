@@ -42,9 +42,6 @@ Actividad 2: Procedimientos almacenados de mantenimiento
 USE NovaMarket;
 GO
 
-============================================================================
-   1. PROCEDIMIENTO ALMACENADO: Insertar nuevo producto
-============================================================================
 CREATE OR ALTER PROCEDURE sp_InsertarProducto
     @Nombre NVARCHAR(100),
     @Precio DECIMAL(10,2),
@@ -58,13 +55,13 @@ BEGIN
     BEGIN
         RAISERROR('El precio del producto debe ser mayor a cero.', 16, 1);
         RETURN;
-    END
+    END;
 
     IF @Stock < 0
     BEGIN
         RAISERROR('El stock inicial no puede ser negativo.', 16, 1);
         RETURN;
-    END
+    END;
 
     INSERT INTO Producto (Nombre, Precio, Stock)
     VALUES (@Nombre, @Precio, @Stock);
@@ -73,9 +70,6 @@ BEGIN
 END;
 GO
 
-============================================================================
-   2. PROCEDIMIENTO ALMACENADO: Actualizar Stock de Producto
-============================================================================
 CREATE OR ALTER PROCEDURE sp_ActualizarStockProducto
     @IdProducto INT,
     @NuevoStock INT
@@ -86,12 +80,12 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM Producto WHERE IdProducto = @IdProducto)
     BEGIN
         RETURN -1;
-    END
+    END;
 
     IF @NuevoStock < 0
     BEGIN
         RETURN -2;
-    END
+    END;
 
     UPDATE Producto
     SET Stock = @NuevoStock
@@ -101,9 +95,6 @@ BEGIN
 END;
 GO
 
-============================================================================
-    3. CASOS DE PRUEBA Y EVIDENCIAS DE EJECUCIÓN
-============================================================================ 
 DECLARE @IdGenerado INT;
 
 EXEC sp_InsertarProducto 
