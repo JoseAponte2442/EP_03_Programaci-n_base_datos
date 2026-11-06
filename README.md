@@ -39,13 +39,15 @@ FIN
 
 Actividad 2: Procedimientos almacenados de mantenimiento 
 
+
 USE NovaMarket; -- Ajustar según el nombre de la base de datos
 GO
 
+-- ============================================================================
 -- 1. PROCEDIMIENTO ALMACENADO: Insertar Nuevo Producto
 -- Parámetros de Entrada: @Nombre, @Precio, @Stock
 -- Parámetro de Salida:   @NuevoId (retorna el ID del producto insertado)
-
+-- ============================================================================
 CREATE OR ALTER PROCEDURE sp_InsertarProducto
     @Nombre NVARCHAR(100),
     @Precio DECIMAL(10,2),
@@ -77,13 +79,14 @@ BEGIN
 END;
 GO
 
+-- ============================================================================
 -- 2. PROCEDIMIENTO ALMACENADO: Actualizar Stock de Producto
 -- Parámetros de Entrada: @IdProducto, @NuevoStock
 -- Valor de Retorno (RETURN): 
 --    0  -> Éxito
 --   -1  -> El producto no existe
 --   -2  -> Stock inválido (menor a cero)
-
+-- ============================================================================
 CREATE OR ALTER PROCEDURE sp_ActualizarStockProducto
     @IdProducto INT,
     @NuevoStock INT
@@ -112,7 +115,9 @@ BEGIN
 END;
 GO
 
+-- ============================================================================
 -- 3. CASOS DE PRUEBA Y EVIDENCIAS DE EJECUCIÓN
+-- ============================================================================
 
 -- CASO A: Inserción de un nuevo producto usando parámetro OUTPUT
 DECLARE @IdGenerado INT;
@@ -135,5 +140,4 @@ EXEC @ResultadoActualizacion = sp_ActualizarStockProducto
 
 SELECT @ResultadoActualizacion AS [Codigo_Resultado_Retorno]; 
 -- Retorna 0 (Éxito)
-GO
 GO
