@@ -140,3 +140,4 @@ EXEC @ResultadoActualizacion = sp_ActualizarStockProducto
 SELECT @ResultadoActualizacion AS [Codigo_Resultado_Retorno]; 
 -- Retorna 0 (Éxito)
 GO
+GO
