@@ -128,6 +128,7 @@ GO
 
 
 ## Actividad 03: Diseño de una operación transaccional
+  ### Por Andrés Francisco Pimentel Saldaña
 
 Contexto:
 Una operación organizacional requiere que varios cambios se consideren como una unidad lógica.
@@ -219,3 +220,5 @@ go
 - **De autoconfirmación (Autocommit):** Cada instrucción individual (como un solo `update`) se confirma o se cancela automáticamente por sí sola tras ejecutarse. No permite agrupar operaciones.
 - **Implícito:** SQL Server inicia una transacción autom[atica en segundo plano al detectar comandos de modificación de datos, pero la deja abierta; obliga a emitir un comando `commit` o `rollback` para finalizarla.
 - **Explícito:** Es el modelo utilizado en nuestra solución y con él definimos de forma manual y exacta dónde inicia la unidad lógica de trabajo (mediante `begin transaction`) y controla cuándo confirmarla o deshacerla según la lógica del negocio.
+
+A continuación, adjuntaré capturas del SQL Server Management
