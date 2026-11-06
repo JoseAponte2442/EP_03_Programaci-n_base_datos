@@ -221,4 +221,6 @@ go
 - **Implícito:** SQL Server inicia una transacción autom[atica en segundo plano al detectar comandos de modificación de datos, pero la deja abierta; obliga a emitir un comando `commit` o `rollback` para finalizarla.
 - **Explícito:** Es el modelo utilizado en nuestra solución y con él definimos de forma manual y exacta dónde inicia la unidad lógica de trabajo (mediante `begin transaction`) y controla cuándo confirmarla o deshacerla según la lógica del negocio.
 
-A continuación, adjuntaré capturas del SQL Server Management
+A continuación, adjuntaré una captura del SQL Server Management en la que se muestra que no se encontraron problemas en el código:
+<img width="624" height="905" alt="{827E1CE4-1E21-403A-8D8E-F6D380B0E2DF}" src="https://github.com/user-attachments/assets/aab4ca81-2ed9-4b80-a339-18c87e92fed2" />
+
