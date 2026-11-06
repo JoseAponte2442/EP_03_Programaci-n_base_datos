@@ -209,3 +209,13 @@ begin
     end catch
 end;
 go
+```
+
+**Criterios de Confirmación y Cancelación:**
+- **Confirmación (commit):** Se ejecuta únicamente si las dos operaciones lógicas (el `update` del stock y el `insert` en el historial) se completan con éxito sin arrojar errores dentro del bloque `try`.
+- **Cancelación (rollback):** Se ejecuta si se activa alguna regla de negocio (como intentar registrar una cantidad negativa o solicitar más stock del existente) o si ocurre un error del servidor. El bloque `catch` intercepta el fallo, deshace cualquier cambio y protege los datos.
+
+**Diferencia entre comportamientos transaccionales:**
+- **De autoconfirmación (Autocommit):** Cada instrucción individual (como un solo `update`) se confirma o se cancela automáticamente por sí sola tras ejecutarse. No permite agrupar operaciones.
+- **Implícito:** SQL Server inicia una transacción autom[atica en segundo plano al detectar comandos de modificación de datos, pero la deja abierta; obliga a emitir un comando `commit` o `rollback` para finalizarla.
+- **Explícito:** Es el modelo utilizado en nuestra solución y con él definimos de forma manual y exacta dónde inicia la unidad lógica de trabajo (mediante `begin transaction`) y controla cuándo confirmarla o deshacerla según la lógica del negocio.
