@@ -40,7 +40,7 @@ FIN
 Actividad 2: Procedimientos almacenados de mantenimiento 
 
 
-USE NovaMarket; -- Ajustar según el nombre de la base de datos
+USE NovaMarket;
 GO
 
 -- ============================================================================
