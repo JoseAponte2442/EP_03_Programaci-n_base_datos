@@ -42,9 +42,9 @@ Actividad 2: Procedimientos almacenados de mantenimiento
 USE NovaMarket;
 GO
 
-/* ============================================================================
-   1. PROCEDIMIENTO ALMACENADO: Insertar Nuevo Producto
-   ============================================================================ */
+============================================================================
+   1. PROCEDIMIENTO ALMACENADO: Insertar nuevo producto
+============================================================================
 CREATE OR ALTER PROCEDURE sp_InsertarProducto
     @Nombre NVARCHAR(100),
     @Precio DECIMAL(10,2),
@@ -73,9 +73,9 @@ BEGIN
 END;
 GO
 
-/* ============================================================================
+============================================================================
    2. PROCEDIMIENTO ALMACENADO: Actualizar Stock de Producto
-   ============================================================================ */
+============================================================================
 CREATE OR ALTER PROCEDURE sp_ActualizarStockProducto
     @IdProducto INT,
     @NuevoStock INT
@@ -101,9 +101,9 @@ BEGIN
 END;
 GO
 
-/* ============================================================================
-   3. CASOS DE PRUEBA Y EVIDENCIAS DE EJECUCIÓN
-   ============================================================================ */
+============================================================================
+    3. CASOS DE PRUEBA Y EVIDENCIAS DE EJECUCIÓN
+============================================================================ 
 DECLARE @IdGenerado INT;
 
 EXEC sp_InsertarProducto 
