@@ -1,9 +1,9 @@
--- ============================================================================
--- Proyecto: NovaMarket - Sistema de Gestión de Inventario y Ventas
--- Archivo: Actividad2_Procedimientos_Almacenados.sql
--- Descripción: Procedimientos almacenados de mantenimiento (Altas y Actualizaciones)
---              con manejo de parámetros de entrada, salida (OUTPUT) y retorno.
--- ============================================================================
+============================================================================
+ Proyecto: NovaMarket - Sistema de Gestión de Inventario y Ventas
+ Archivo: Actividad2_Procedimientos_Almacenados.sql
+ Descripción: Procedimientos almacenados de mantenimiento (Altas y Actualizaciones)
+             con manejo de parámetros de entrada, salida (OUTPUT) y retorno.
+============================================================================
 
 USE NovaMarket; -- Ajustar según el nombre de la base de datos
 GO
