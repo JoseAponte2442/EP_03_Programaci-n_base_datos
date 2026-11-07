@@ -2,7 +2,8 @@
 
 📋 Contenido de las Actividades
 
-# Actividad 1: Identificación del Proceso a Automatizar
+---
+## Actividad 1: Identificación del Proceso a Automatizar
 
 ## Caso de Estudio
 
