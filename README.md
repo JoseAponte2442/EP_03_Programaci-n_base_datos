@@ -2,41 +2,168 @@
 
 📋 Contenido de las Actividades
 
-Actividad 1: Identificación del proceso a automatizar
+# Actividad 1: Identificación del Proceso a Automatizar
 
-Contexto y Problema: Migración de la lógica de negocio repetitiva desde las aplicaciones cliente hacia el servidor SQL Server para evitar sobrecarga de red y vulnerabilidades.
+## Caso de Estudio
 
-Entradas y Salidas:
-
-Entradas: @IdEquipo (INT), @NuevoEstado (VARCHAR), @Observaciones (TEXT).
-
-Salidas: @CodigoRetorno (INT), @Mensaje (VARCHAR).
-
-Reglas de Negocio: Validación de existencia de equipos y restricción para no dar de baja equipos con mantenimientos pendientes.
-
-Diagrama de Flujo (Pseudocódigo):
-
-### Proceso de Actualización de Estado de Equipos
-
-**Lógica del Pseudocódigo:**
-```sql
-INICIO
-  Recibir parámetros (@IdEquipo, @NuevoEstado, @Observaciones)
-  Validar existencia del equipo en la tabla Equipos
-  SI el equipo no existe ENTONCES Retornar error (-1)
-  Verificar restricciones de órdenes abiertas
-  SI existen órdenes abiertas Y @NuevoEstado = 'Dado de Baja' ENTONCES Retornar error (-2)
-  Ejecutar UPDATE y retornar éxito (0)
-FIN
-```
-
-**Códigos de Retorno:**
-* `0`: Éxito. El estado del equipo se actualizó correctamente.
-* `-1`: Error. El equipo especificado en `@IdEquipo` no existe.
-* `-2`: Error. No se puede dar de baja un equipo con órdenes de trabajo abiertas.
+La organización necesita administrar información relacionada con clientes, productos y operaciones mediante una base de datos en Microsoft SQL Server. Actualmente, los usuarios realizan tareas repetitivas de mantenimiento desde sus aplicaciones, por lo que se requiere trasladar parte de la lógica de negocio al servidor para mejorar la reutilización, el control y la consistencia de los datos.
 
 ---
 
+# Proceso Seleccionado
+
+## Mantenimiento de Productos
+
+El proceso consiste en registrar nuevos productos y actualizar el stock de los productos existentes.
+
+Estas operaciones son ejecutadas frecuentemente por los usuarios del sistema y requieren validaciones para garantizar la integridad de la información almacenada en la base de datos.
+
+---
+
+# Entradas y Salidas
+
+## Proceso: Registrar Producto
+
+### Entradas
+
+- Nombre del producto
+- Precio del producto
+- Stock inicial
+
+### Salidas
+
+- Identificador (ID) generado automáticamente para el producto
+
+### Reglas de Negocio
+
+- El precio debe ser mayor que cero.
+- El stock inicial no puede ser negativo.
+
+---
+
+## Proceso: Actualizar Stock
+
+### Entradas
+
+- ID del producto
+- Nuevo stock
+
+### Salidas
+
+- Código de resultado de la operación
+
+### Reglas de Negocio
+
+- El producto debe existir.
+- El nuevo stock no puede ser negativo.
+
+### Códigos de Retorno
+
+| Código | Descripción |
+|----------|-------------|
+| 0 | Actualización exitosa |
+| -1 | El producto no existe |
+| -2 | El stock es inválido |
+
+---
+
+# Pseudocódigo del Proceso
+
+## Registro de Producto
+
+```text
+Inicio
+
+Recibir Nombre
+Recibir Precio
+Recibir Stock
+
+Si Precio <= 0
+    Mostrar error
+    Finalizar
+Fin Si
+
+Si Stock < 0
+    Mostrar error
+    Finalizar
+Fin Si
+
+Insertar producto en la base de datos
+
+Obtener ID generado
+
+Devolver ID
+
+Fin
+```
+
+## Actualización de Stock
+
+```text
+Inicio
+
+Recibir IdProducto
+Recibir NuevoStock
+
+Si el producto no existe
+    Retornar -1
+Fin Si
+
+Si NuevoStock < 0
+    Retornar -2
+Fin Si
+
+Actualizar Stock
+
+Retornar 0
+
+Fin
+```
+
+---
+
+# Relación con la Arquitectura Cliente/Servidor
+
+```text
++---------------------------+
+|          CLIENTE          |
+|  Aplicación del Usuario   |
++------------+--------------+
+             |
+             | Ejecuta
+             | Procedimientos
+             V
++---------------------------+
+|         SERVIDOR          |
+|        SQL SERVER         |
+|                           |
+| sp_InsertarProducto       |
+| sp_ActualizarStockProducto|
++------------+--------------+
+             |
+             | Acceso
+             V
++---------------------------+
+|      BASE DE DATOS        |
+|         Productos         |
++---------------------------+
+```
+
+---
+
+# Justificación de la Automatización
+
+La implementación de este proceso mediante procedimientos almacenados en SQL Server ofrece las siguientes ventajas:
+
+- Centraliza las reglas de negocio en el servidor.
+- Evita duplicar validaciones en múltiples aplicaciones cliente.
+- Garantiza la integridad de los datos.
+- Facilita el mantenimiento del sistema.
+- Reduce errores producidos por entradas incorrectas.
+- Permite reutilizar la misma lógica desde diferentes aplicaciones.
+- Disminuye el tráfico entre cliente y servidor al ejecutar las validaciones directamente en la base de datos.
+
+---
 ## Actividad 2: Procedimientos Almacenados de Mantenimiento
 
 **Contexto y Problema:** Operaciones de mantenimiento reutilizables sobre las tablas existentes (`Producto`), permitiendo altas y actualizaciones controladas desde el servidor.
