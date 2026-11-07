@@ -384,7 +384,7 @@ B. Escenario No Favorable (Cancelación - ROLLBACK)
 Descripción: Se intenta retirar una cantidad superior al stock disponible actual para validar la protección contra estados inconsistentes.
 
 Script de Ejecución:
-
+```sql
 USE NovaMarket;
 GO
 
@@ -395,7 +395,7 @@ GO
 -- Consultar estado del stock
 SELECT * FROM Producto WHERE IdProducto = 1;
 GO
-
+```
 
 Comportamiento Observado: Al detectar stock insuficiente, se activa el bloque CATCH ejecutando un ROLLBACK TRANSACTION. Se cancelan los cambios parciales y el stock se mantiene intacto.
 
