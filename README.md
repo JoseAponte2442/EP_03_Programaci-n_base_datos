@@ -5,25 +5,29 @@
 ---
 ## Actividad 1: Identificación del Proceso a Automatizar
 
-## Caso de Estudio
-
-La organización necesita administrar información relacionada con clientes, productos y operaciones mediante una base de datos en Microsoft SQL Server. Actualmente, los usuarios realizan tareas repetitivas de mantenimiento desde sus aplicaciones, por lo que se requiere trasladar parte de la lógica de negocio al servidor para mejorar la reutilización, el control y la consistencia de los datos.
-
+### Proyecto: NovaMarket - Sistema de Gestión de Inventario y Ventas
+ 
+#### Contexto
+ 
+NovaMarket es una organización que administra información de clientes, productos y operaciones mediante una base de datos en Microsoft SQL Server. Los usuarios realizan constantemente tareas de mantenimiento relacionadas con el registro de productos y la actualización de existencias, por lo que se requiere trasladar parte de la lógica de negocio al servidor para mejorar la consistencia, seguridad y reutilización de los procesos.
 ---
 
-# Proceso Seleccionado
+## Proceso Seleccionado
 
-## Mantenimiento de Productos
+### Mantenimiento de Productos
 
-El proceso consiste en registrar nuevos productos y actualizar el stock de los productos existentes.
+El proceso seleccionado consiste en gestionar el catálogo de productos mediante dos operaciones principales:
 
-Estas operaciones son ejecutadas frecuentemente por los usuarios del sistema y requieren validaciones para garantizar la integridad de la información almacenada en la base de datos.
+1. Registro de nuevos productos.
+2. Actualización del stock de productos existentes.
+
+Estas operaciones son realizadas frecuentemente por los usuarios del sistema y requieren validaciones que garanticen la integridad de los datos almacenados.
 
 ---
 
 # Entradas y Salidas
 
-## Proceso: Registrar Producto
+## Proceso 1: Registrar Producto
 
 ### Entradas
 
@@ -42,7 +46,7 @@ Estas operaciones son ejecutadas frecuentemente por los usuarios del sistema y r
 
 ---
 
-## Proceso: Actualizar Stock
+## Proceso 2: Actualizar Stock
 
 ### Entradas
 
