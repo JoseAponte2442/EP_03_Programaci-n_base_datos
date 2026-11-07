@@ -11,7 +11,7 @@
 
 NovaMarket es una organización que administra información de clientes, productos y operaciones mediante una base de datos en Microsoft SQL Server. Los usuarios realizan constantemente tareas de mantenimiento relacionadas con el registro de productos y la actualización de existencias, por lo que se requiere trasladar parte de la lógica de negocio al servidor para mejorar la consistencia, seguridad y reutilización de los procesos.
 
-## Link de youtube: 
+## Link de youtube: https://www.youtube.com/watch?v=BwBj1SD5WUU
 
 ## Proceso Seleccionado
 
