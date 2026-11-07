@@ -5,7 +5,8 @@ GO
 USE NovaMarket;
 GO
 ---Tabla  Clientes
-CREATE TABLE Clientes
+
+CREATE TABLE Cliente
 (
     IdCliente INT IDENTITY(1,1) PRIMARY KEY,
     Nombre NVARCHAR(100) NOT NULL,
@@ -13,9 +14,11 @@ CREATE TABLE Clientes
 );
 GO
 
+
 ---Tabla Productos
 
-CREATE TABLE Productos
+
+CREATE TABLE Producto
 (
     IdProducto INT IDENTITY(1,1) PRIMARY KEY,
     Nombre NVARCHAR(100) NOT NULL,
@@ -26,15 +29,16 @@ GO
 
 ---Tabla operaciones
 
-CREATE TABLE Operaciones
+
+CREATE TABLE Operacion
 (
     IdOperacion INT IDENTITY(1,1) PRIMARY KEY,
     IdProducto INT NOT NULL,
     Estado VARCHAR(20) NOT NULL,
     Descripcion VARCHAR(200) NULL,
 
-    CONSTRAINT FK_Operaciones_Productos
+    CONSTRAINT FK_Operacion_Producto
         FOREIGN KEY (IdProducto)
-        REFERENCES Productos(IdProducto)
+        REFERENCES Producto(IdProducto)
 );
 GO
