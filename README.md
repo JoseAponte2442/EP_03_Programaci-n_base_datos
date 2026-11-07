@@ -351,3 +351,54 @@ go
 A continuación, adjuntaré una captura del SQL Server Management en la que se muestra que no se encontraron problemas en el código:
 <img width="624" height="905" alt="{827E1CE4-1E21-403A-8D8E-F6D380B0E2DF}" src="https://github.com/user-attachments/assets/aab4ca81-2ed9-4b80-a339-18c87e92fed2" />
 
+## Actividad 4: Pruebas Comparativas y Argumentación
+
+**Contexto y Objetivo:** 
+Verificación del comportamiento del procedimiento transaccional `sp_RegistrarSalidaInventario` bajo escenarios favorables y no favorables, asegurando que las reglas de negocio y los mecanismos de control de errores eviten corrupciones de datos.
+
+### 1. Casos de Prueba Ejecutados
+
+#### A. Escenario Favorable (Confirmación - COMMIT)
+* **Descripción:** Se registra una salida de inventario válida sobre un producto con stock suficiente.
+* **Script de Ejecución:**
+  ```sql
+  USE NovaMarket;
+  GO
+
+  -- Insertar producto de prueba (ID 1)
+  INSERT INTO Producto (Nombre, Precio, Stock) VALUES ('Laptop Pro 15', 1250.00, 20);
+  GO
+
+  -- Ejecutar salida exitosa de 5 unidades
+  EXEC sp_RegistrarSalidaInventario @IdProducto = 1, @CantidadSalida = 5;
+  GO
+
+  -- Consultar evidencias
+  SELECT * FROM Producto WHERE IdProducto = 1;
+  SELECT * FROM HistorialMovimientos;
+  GO
+
+  Comportamiento Observado: La transacción se ejecuta correctamente, actualizando el stock de 20 a 15 y registrando el movimiento como 'COMPLETADO'. La operación aplica un COMMIT exitoso.
+
+B. Escenario No Favorable (Cancelación - ROLLBACK)
+Descripción: Se intenta retirar una cantidad superior al stock disponible actual para validar la protección contra estados inconsistentes.
+
+Script de Ejecución:
+
+USE NovaMarket;
+GO
+
+-- Intentar retirar 500 unidades (supera el stock actual)
+EXEC sp_RegistrarSalidaInventario @IdProducto = 1, @CantidadSalida = 500;
+GO
+
+-- Consultar estado del stock
+SELECT * FROM Producto WHERE IdProducto = 1;
+GO
+
+
+Comportamiento Observado: Al detectar stock insuficiente, se activa el bloque CATCH ejecutando un ROLLBACK TRANSACTION. Se cancelan los cambios parciales y el stock se mantiene intacto.
+
+2. Evidencias de Ejecución (Resultados de Pruebas)
+A continuación se adjunta la captura de pantalla de los resultados obtenidos en SQL Server Management Studio para las pruebas comparativas:
+<img width="624" height="905" alt="{827E1CE4-1E21-403A-8D8E-F6D380B0E2DF}" src="https://github.com/JoseAponte2442/EP_03_Programaci-n_base_datos/blob/main/evidencia.png?raw=true" />
