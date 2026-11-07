@@ -256,6 +256,8 @@ EXEC @ResultadoActualizacion = sp_ActualizarStockProducto
 SELECT @ResultadoActualizacion AS [Codigo_Resultado_Retorno];
 GO
 ```
+<img width="811" height="462" alt="image" src="https://github.com/user-attachments/assets/ab81f85e-4db1-468f-936c-e743361a8330" />
+<img width="873" height="428" alt="image" src="https://github.com/user-attachments/assets/3b835a64-9b86-4433-8080-92f381cd549c" />
 
 
 ## Actividad 03: Diseño de una operación transaccional
