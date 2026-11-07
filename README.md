@@ -24,7 +24,7 @@ Estas operaciones son realizadas frecuentemente por los usuarios del sistema y r
 
 ---
 
-# Entradas y Salidas
+## Entradas y Salidas
 
 ## Proceso 1: Registrar Producto
 
